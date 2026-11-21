@@ -1,0 +1,51 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: Durable Order Processor - Traditional Path
+
+Parameters:
+  PermissionsBoundaryArn:
+    Type: String
+    Default: ""
+    Description: >-
+      ARN of the permissions boundary policy for the Lambda execution role. Hosted workshop
+      events set this automatically in samconfig.toml. Leave it empty in your own AWS account.
+
+Conditions:
+  UseBoundary: !Not [!Equals [!Ref PermissionsBoundaryArn, ""]]
+
+Globals:
+  Function:
+    Runtime: python3.13
+    Timeout: 300
+    MemorySize: 256
+
+Resources:
+  # Keep this logical ID short. SAM names the execution role
+  # <stack>-<LogicalId>Role-<suffix>; IAM caps role names at 64 characters, and a
+  # truncated name would no longer match the lab IAM policy's role patterns.
+  OrderProcessor:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: durable-order-processor-trad
+      Handler: durable_order_processor_trad.handler
+      PermissionsBoundary: !If [UseBoundary, !Ref PermissionsBoundaryArn, !Ref AWS::NoValue]
+      CodeUri: .
+      DurableConfig:
+        ExecutionTimeout: 900
+        RetentionPeriodInDays: 7
+      Environment:
+        Variables:
+          VALIDATE_ORDER_FUNCTION: order-validate
+          PROCESS_PAYMENT_FUNCTION: order-process-payment
+          CREATE_ORDER_FUNCTION: order-create-order
+          CHECK_SHIPPING_FUNCTION: order-check-shipping
+      Policies:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicDurableExecutionRolePolicy
+        - LambdaInvokePolicy:
+            FunctionName: order-validate
+        - LambdaInvokePolicy:
+            FunctionName: order-process-payment
+        - LambdaInvokePolicy:
+            FunctionName: order-create-order
+        - LambdaInvokePolicy:
+            FunctionName: order-check-shipping
