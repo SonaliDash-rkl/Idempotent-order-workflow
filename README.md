@@ -1,6 +1,6 @@
 # Idempotent Order Workflow
 
-A serverless order-processing workflow built on **AWS Lambda durable functions**, demonstrating how to make multi-step workflows idempotent, concurrent, and capable of pausing for human approval without burning compute. This was from the https://aws-experience.com/amer/smb/e/7e0bb/building-resilient-long-running-applications-in-aws-lambda event.
+A serverless order-processing workflow built on **AWS Lambda durable functions**, demonstrating how to make multi-step workflows idempotent, concurrent, and capable of pausing for human approval without burning compute. This was from the https://aws-experience.com/amer/smb/e/7e0bb/building-resilient-long-running-applications-in-aws-lambda event , https://catalog.workshops.aws/workshops/75eae667-ce62-40b4-94be-7b34e5621005/en-US
 
 Built by working through the AWS Lambda durable functions workshop. The handler and SAM template are as deployed, unmodified. The documentation and failure analysis are my own.
 
