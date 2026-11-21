@@ -1,6 +1,6 @@
 # Idempotent Order Workflow
 
-A serverless order-processing workflow built on **AWS Lambda durable functions**, demonstrating how to make multi-step workflows idempotent, concurrent, and capable of pausing for human approval without burning compute.
+A serverless order-processing workflow built on **AWS Lambda durable functions**, demonstrating how to make multi-step workflows idempotent, concurrent, and capable of pausing for human approval without burning compute. This was from the https://aws-experience.com/amer/smb/e/7e0bb/building-resilient-long-running-applications-in-aws-lambda event.
 
 Built by working through the AWS Lambda durable functions workshop. The handler and SAM template are as deployed, unmodified. The documentation and failure analysis are my own.
 
@@ -25,6 +25,11 @@ This isn't a Lambda problem. Any multi-step workflow on any runtime hits it with
 Durable functions solve it inside the Lambda programming model: your handler stays ordinary Python, and the SDK checkpoints each operation so a replay skips work that already finished.
 
 ---
+<img width="975" height="369" alt="image" src="https://github.com/user-attachments/assets/f2a07330-4bc6-4281-9aec-8f81f5cb6f00" />
+<img width="975" height="448" alt="image" src="https://github.com/user-attachments/assets/8c7508dd-3dd0-4761-82b2-67fd7f7356db" />
+<img width="975" height="425" alt="image" src="https://github.com/user-attachments/assets/ffdc819b-1a13-47e1-b532-e3e81e75446f" />
+
+
 
 ## What this repo demonstrates
 
